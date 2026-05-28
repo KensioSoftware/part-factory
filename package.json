@@ -1,0 +1,65 @@
+{
+  "name": "@kensio/part-factory",
+  "description": "TypeScript-first partial object factory pattern for testing",
+  "author": "Kensio Software",
+  "repository": "https://github.com/KensioSoftware/part-factory",
+  "license": "AGPL-3.0",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "sideEffects": false,
+  "packageManager": "pnpm@10.32.1",
+  "engines": {
+    "node": ">=24.14.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "fmt": "eslint --fix '{src,test}/**/*.ts' && prettier --write '{src,test}/**/*.{ts,json,md,css,html,yml,yaml}'",
+    "lint": "eslint '{src,test}/**/*.ts' && prettier --check '{src,test}/**/*.{ts,json,md,css,html,yml,yaml}'",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "keywords": [
+    "test",
+    "assertion",
+    "type",
+    "narrowing"
+  ],
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@kensio/smartass": "^0.1.10",
+    "@types/eslint-plugin-security": "^3.0.1",
+    "@types/lodash": "^4.17.24",
+    "@types/node": "^25.9.1",
+    "@vitest/coverage-v8": "^4.1.7",
+    "@vitest/eslint-plugin": "^1.6.18",
+    "eslint": "^10.4.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jsdoc": "^62.9.0",
+    "eslint-plugin-no-secrets": "^2.3.3",
+    "eslint-plugin-security": "^4.0.0",
+    "eslint-plugin-unicorn": "^63.0.0",
+    "globals": "^17.6.0",
+    "jiti": "^2.7.0",
+    "prettier": "^3.8.3",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.60.0",
+    "vitest": "^4.1.7"
+  },
+  "dependencies": {
+    "lodash": "^4.18.1"
+  }
+}
