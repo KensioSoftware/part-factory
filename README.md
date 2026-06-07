@@ -51,10 +51,10 @@ library such as [Faker](https://fakerjs.dev/).
 import { DynamicFactory } from "@kensio/part-factory";
 import { faker } from '@faker-js/faker';
 
-const fooFactory = new DynamicFactory<Foo>({
-  name: () => faker.word.noun(),
-  size: () => faker.number.int({ max: 100 }),
-});
+const fooFactory = new DynamicFactory<Foo>(() => ({
+  name: faker.word.noun(),
+  size: faker.number.int({ max: 100 }),
+}));
 
 const defaultFoo = fooFactory.make();
 // { name: "external", size: 42 }
@@ -71,10 +71,10 @@ We can create variant factories that apply preset variations to objects made by 
 import { DynamicFactory, VariantFactory } from "@kensio/part-factory";
 import { faker } from '@faker-js/faker';
 
-const animalFactory = new DynamicFactory<Foo>({
-  name: () => faker.animal.type(),
-  size: () => faker.number.int({ max: 100 }),
-});
+const animalFactory = new DynamicFactory<Foo>(() => ({
+  name: faker.animal.type(),
+  size: faker.number.int({ max: 100 }),
+}));
 
 const zebraFactory = new VariantFactory<Foo>(baseFactory, {
   name: "Zebra",

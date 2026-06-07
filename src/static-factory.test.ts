@@ -1,6 +1,6 @@
 import { describe, it } from "vitest";
 import { StaticFactory } from "./static-factory.js";
-import { assertArrayEqual, assertIdentical } from "@kensio/smartass";
+import { assertArrayEquals, assertIdentical } from "@kensio/smartass";
 
 describe("Static Factory", () => {
   interface Foo {
@@ -64,6 +64,6 @@ describe("Static Factory", () => {
     const item = collectionFactory.make({ tags: ["C"] });
 
     assertIdentical(item.name, "Foo Collection");
-    assertArrayEqual(item.tags, ["C", "B"]);
+    assertArrayEquals(item.tags, ["C", "B"]);
   });
 });
