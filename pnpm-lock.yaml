@@ -17,7 +17,7 @@ importers:
         version: 10.0.1(eslint@10.5.0(jiti@2.7.0))
       '@kensio/smartass':
         specifier: ^1.7.0
-        version: 1.11.0
+        version: 1.24.0
       '@types/eslint-plugin-security':
         specifier: ^3.0.1
         version: 3.0.1
@@ -326,9 +326,9 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@kensio/smartass@1.11.0':
-    resolution: {integrity: sha512-yfz7deufIKhDCtbb1zIUv8fkFTCSMThvowHGgrn7o8vVSGdqY6GAyxxlzPHV7oo9HjqMoHQBcam61Znw8I7dww==}
-    engines: {node: '>=18.0.0'}
+  '@kensio/smartass@1.24.0':
+    resolution: {integrity: sha512-Rty7KE8pK4K2AOo5pQz8EjM4jFTBFvuNRoCqdju5EDtUyIN53DLOfd5tmAiusY6VWgKiae/FValzdlTClin4wg==}
+    engines: {node: '>=22.0.0'}
 
   '@rollup/rollup-android-arm-eabi@4.62.2':
     resolution: {integrity: sha512-6o7ZLZK+BeenkZCFNDXqpbjw9bD6nuWonvS/lwQJp7NoVVxm6p3qE7qQ5jGuBjiFsgvqjD8mZAU5oWxTmbOeOg==}
@@ -1060,8 +1060,8 @@ packages:
     resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==}
     engines: {node: '>=4'}
 
-  postcss@8.5.15:
-    resolution: {integrity: sha512-FfR8sjd4em2T6fb3I2MwAJU7HWVMr9zba+enmQeeWFfCbm+UOC/0X4DS8XtpUTMwWMGbjKYP7xjfNekzyGmB3A==}
+  postcss@8.5.16:
+    resolution: {integrity: sha512-vuwillviilfKZsg0VGj5R/YwwcHx4SLsIOI/7K6mQkWx+l5cUHTjj5g0AasTBcyXsbfTgrwsUNmVUb5xVwyPwg==}
     engines: {node: ^10 || ^12 || >=14}
 
   prelude-ls@1.2.1:
@@ -1461,7 +1461,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@kensio/smartass@1.11.0': {}
+  '@kensio/smartass@1.24.0': {}
 
   '@rollup/rollup-android-arm-eabi@4.62.2':
     optional: true
@@ -2185,7 +2185,7 @@ snapshots:
 
   pluralize@8.0.0: {}
 
-  postcss@8.5.15:
+  postcss@8.5.16:
     dependencies:
       nanoid: 3.3.15
       picocolors: 1.1.1
@@ -2327,7 +2327,7 @@ snapshots:
       esbuild: 0.27.7
       fdir: 6.5.0(picomatch@4.0.4)
       picomatch: 4.0.4
-      postcss: 8.5.15
+      postcss: 8.5.16
       rollup: 4.62.2
       tinyglobby: 0.2.17
     optionalDependencies:
