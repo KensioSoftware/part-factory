@@ -17,7 +17,7 @@ importers:
         version: 10.0.1(eslint@10.5.0(jiti@2.7.0))
       '@kensio/smartass':
         specifier: ^1.7.0
-        version: 1.27.0
+        version: 1.28.0
       '@types/eslint-plugin-security':
         specifier: ^3.0.1
         version: 3.0.1
@@ -326,8 +326,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@kensio/smartass@1.27.0':
-    resolution: {integrity: sha512-qDSit2BbQ8Yisu4pga4H45EcAWl60xpJM6HqmLQw4CVVXOaCrEreTgZ77IIAqFZqBVz6vgdJQBo13hFtL4K2LA==}
+  '@kensio/smartass@1.28.0':
+    resolution: {integrity: sha512-WH1ScQCvlYJNJcbJidqFzov2IGwnpkCua12Ve44n7WYInqXGo72wTT0SDfeVsfMpVamXwEVfc/4YSvTc8cvKXA==}
     engines: {node: '>=22.0.0'}
 
   '@rollup/rollup-android-arm-eabi@4.62.2':
@@ -1469,7 +1469,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@kensio/smartass@1.27.0': {}
+  '@kensio/smartass@1.28.0': {}
 
   '@rollup/rollup-android-arm-eabi@4.62.2':
     optional: true
