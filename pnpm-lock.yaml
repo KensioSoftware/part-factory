@@ -17,7 +17,7 @@ importers:
         version: 10.0.1(eslint@10.5.0(jiti@2.7.0))
       '@kensio/smartass':
         specifier: ^1.7.0
-        version: 1.27.0
+        version: 1.28.0
       '@types/eslint-plugin-security':
         specifier: ^3.0.1
         version: 3.0.1
@@ -326,8 +326,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@kensio/smartass@1.27.0':
-    resolution: {integrity: sha512-qDSit2BbQ8Yisu4pga4H45EcAWl60xpJM6HqmLQw4CVVXOaCrEreTgZ77IIAqFZqBVz6vgdJQBo13hFtL4K2LA==}
+  '@kensio/smartass@1.28.0':
+    resolution: {integrity: sha512-WH1ScQCvlYJNJcbJidqFzov2IGwnpkCua12Ve44n7WYInqXGo72wTT0SDfeVsfMpVamXwEVfc/4YSvTc8cvKXA==}
     engines: {node: '>=22.0.0'}
 
   '@rollup/rollup-android-arm-eabi@4.62.2':
@@ -1056,6 +1056,10 @@ packages:
     resolution: {integrity: sha512-QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A==}
     engines: {node: '>=12'}
 
+  picomatch@4.0.5:
+    resolution: {integrity: sha512-RvwwcruNjI1ncT5xRakeyS9Lf8lcItv34KD+aif+VH9kduAyfYBipGh12274xtenIPZ119/R9BdTBa8gAwSh0A==}
+    engines: {node: '>=12'}
+
   pluralize@8.0.0:
     resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==}
     engines: {node: '>=4'}
@@ -1461,7 +1465,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@kensio/smartass@1.27.0': {}
+  '@kensio/smartass@1.28.0': {}
 
   '@rollup/rollup-android-arm-eabi@4.62.2':
     optional: true
@@ -2025,6 +2029,10 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.4
 
+  fdir@6.5.0(picomatch@4.0.5):
+    optionalDependencies:
+      picomatch: 4.0.5
+
   file-entry-cache@8.0.0:
     dependencies:
       flat-cache: 4.0.1
@@ -2183,6 +2191,8 @@ snapshots:
 
   picomatch@4.0.4: {}
 
+  picomatch@4.0.5: {}
+
   pluralize@8.0.0: {}
 
   postcss@8.5.16:
@@ -2325,8 +2335,8 @@ snapshots:
   vite@7.3.1(@types/node@25.9.4)(jiti@2.7.0):
     dependencies:
       esbuild: 0.27.7
-      fdir: 6.5.0(picomatch@4.0.4)
-      picomatch: 4.0.4
+      fdir: 6.5.0(picomatch@4.0.5)
+      picomatch: 4.0.5
       postcss: 8.5.16
       rollup: 4.62.2
       tinyglobby: 0.2.17
