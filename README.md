@@ -87,6 +87,33 @@ const largeZebra = zebraFactory.make({ size: 100 });
 // { name: "Zebra", size: 100 }
 ```
 
+## MappedFactory
+
+Sometimes the values you want to override are easier to represent as a structured input object, but
+the value you want from the factory has a different output type.
+
+`MappedFactory` generates the input object, applies overrides to that input object, then maps the
+completed input into the final output.
+
+```typescript import { MappedFactory } from "@kensio/part-factory";
+import { faker } from "@faker-js/faker";
+
+interface ArnComponents {
+  partition: "aws";
+  service: string;
+  region: string;
+  accountId: string;
+  resourceType: string;
+  resourceId: string;
+}
+
+type Arn = `arn:aws:${string}`;
+const arnFactory = new MappedFactory<ArnComponents, Arn>();
+
+const arn = arnFactory.make({ service: "s3", resourceType: "bucket" });
+// arn:aws:s3:eu-west-1:123456789012:bucket/abc123def4
+```
+
 ## Nested structures
 
 The overrides are partial down through the object structure. This means that we can override one
