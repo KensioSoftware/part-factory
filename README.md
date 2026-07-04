@@ -49,7 +49,7 @@ library such as [Faker](https://fakerjs.dev/).
 
 ```typescript
 import { DynamicFactory } from "@kensio/part-factory";
-import { faker } from '@faker-js/faker';
+import { faker } from "@faker-js/faker";
 
 const fooFactory = new DynamicFactory<Foo>(() => ({
   name: faker.word.noun(),
@@ -69,7 +69,7 @@ We can create variant factories that apply preset variations to objects made by 
 
 ```typescript
 import { DynamicFactory, VariantFactory } from "@kensio/part-factory";
-import { faker } from '@faker-js/faker';
+import { faker } from "@faker-js/faker";
 
 const animalFactory = new DynamicFactory<Foo>(() => ({
   name: faker.animal.type(),
@@ -85,6 +85,52 @@ const zebra = zebraFactory.make();
 
 const largeZebra = zebraFactory.make({ size: 100 });
 // { name: "Zebra", size: 100 }
+```
+
+## MappedFactory
+
+Sometimes the values you want to override are easier to represent as a structured input object, but
+the value you want from the factory has a different output type.
+
+`MappedFactory` generates the input object, applies overrides to that input object, then maps the
+completed input into the final output.
+
+```typescript
+import { MappedFactory } from "@kensio/part-factory";
+
+interface ArnComponents {
+  partition: "aws";
+  service: string;
+  region: string;
+  accountId: string;
+  resourceType: string;
+  resourceId: string;
+}
+
+type Arn = `arn:aws:${string}:${string}:${string}:${string}/${string}`;
+
+const arnFactory = new MappedFactory<ArnComponents, Arn>(
+  () => ({
+    partition: "aws",
+    service: "lambda",
+    region: "eu-west-1",
+    accountId: "123456789012",
+    resourceType: "function",
+    resourceId: "example-function",
+  }),
+  (components) =>
+    `arn:${components.partition}:${components.service}:${components.region}:${components.accountId}:${components.resourceType}/${components.resourceId}`,
+);
+
+const defaultArn = arnFactory.make();
+// "arn:aws:lambda:eu-west-1:123456789012:function/example-function"
+
+const bucketArn = arnFactory.make({
+  service: "s3",
+  resourceType: "bucket",
+  resourceId: "abc123def4",
+});
+// "arn:aws:s3:eu-west-1:123456789012:bucket/abc123def4"
 ```
 
 ## Nested structures

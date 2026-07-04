@@ -1,4 +1,4 @@
-import type { DeepPartialObject } from "./deep-partial.js";
+import type { DeepPartialObject } from "./partial/deep-partial.js";
 
 export type ItemMaker<T extends object> = (
   overrides?: DeepPartialObject<T>,

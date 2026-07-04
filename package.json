@@ -29,10 +29,12 @@
   },
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "fmt": "eslint --fix '{src,test}/**/*.ts' && prettier --write '{src,test}/**/*.{ts,json,md,css,html,yml,yaml}'",
-    "lint": "eslint '{src,test}/**/*.ts' && prettier --check '{src,test}/**/*.{ts,json,md,css,html,yml,yaml}'",
+    "build:check": "tsc -p tsconfig.json --noEmit",
+    "fmt": "eslint --fix . && prettier --write .",
+    "lint": "eslint . && prettier --check .",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "check": "pnpm fmt && pnpm build:check && pnpm test:coverage"
   },
   "keywords": [
     "test",
