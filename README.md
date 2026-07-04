@@ -1,7 +1,16 @@
-# @kensio/part-factory
+# <img src="https://partfactory.dev/favicon.png" alt="Part Factory logo" width="28" height="28">&nbsp;&nbsp;Part Factory test entity factory pattern
+
+[![npm version](https://img.shields.io/npm/v/%40kensio%2Fpart-factory)](https://www.npmjs.com/package/@kensio/part-factory)
+![CI](https://img.shields.io/github/actions/workflow/status/KensioSoftware/part-factory/pr.yml?label=CI)
+![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/hughgrigg/73825ab37116cf8a917383e5addb3bea/raw/coverage.json)
+![Node](https://img.shields.io/node/v/%40kensio%2Fpart-factory)
+![TypeScript](https://img.shields.io/badge/TS-TypeScript-3178C6)
+![License](https://img.shields.io/npm/l/%40kensio%2Fpart-factory)
 
 Part Factory is a minimalist object factory pattern with strong typing. Create object factories with
 suitable default value generation, then override the defaults as needed per test case.
+
+[https://partfactory.dev/](https://partfactory.dev/ "Part Factory test entity factory pattern docs website")
 
 ## Installation
 
