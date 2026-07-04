@@ -95,8 +95,8 @@ the value you want from the factory has a different output type.
 `MappedFactory` generates the input object, applies overrides to that input object, then maps the
 completed input into the final output.
 
-```typescript import { MappedFactory } from "@kensio/part-factory";
-import { faker } from "@faker-js/faker";
+```typescript
+import { MappedFactory } from "@kensio/part-factory";
 
 interface ArnComponents {
   partition: "aws";
@@ -107,11 +107,30 @@ interface ArnComponents {
   resourceId: string;
 }
 
-type Arn = `arn:aws:${string}`;
-const arnFactory = new MappedFactory<ArnComponents, Arn>();
+type Arn = `arn:aws:${string}:${string}:${string}:${string}/${string}`;
 
-const arn = arnFactory.make({ service: "s3", resourceType: "bucket" });
-// arn:aws:s3:eu-west-1:123456789012:bucket/abc123def4
+const arnFactory = new MappedFactory<ArnComponents, Arn>(
+  () => ({
+    partition: "aws",
+    service: "lambda",
+    region: "eu-west-1",
+    accountId: "123456789012",
+    resourceType: "function",
+    resourceId: "example-function",
+  }),
+  (components) =>
+    `arn:${components.partition}:${components.service}:${components.region}:${components.accountId}:${components.resourceType}/${components.resourceId}`,
+);
+
+const defaultArn = arnFactory.make();
+// "arn:aws:lambda:eu-west-1:123456789012:function/example-function"
+
+const bucketArn = arnFactory.make({
+  service: "s3",
+  resourceType: "bucket",
+  resourceId: "abc123def4",
+});
+// "arn:aws:s3:eu-west-1:123456789012:bucket/abc123def4"
 ```
 
 ## Nested structures
