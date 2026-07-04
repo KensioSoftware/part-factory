@@ -5,7 +5,7 @@
   "repository": "https://github.com/KensioSoftware/part-factory",
   "homepage": "https://partfactory.dev/",
   "license": "Apache-2.0",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
