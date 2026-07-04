@@ -3,6 +3,7 @@
   "description": "TypeScript-first partial object factory pattern for testing",
   "author": "Kensio Software",
   "repository": "https://github.com/KensioSoftware/part-factory",
+  "homepage": "https://partfactory.dev/",
   "license": "Apache-2.0",
   "version": "1.4.0",
   "type": "module",
