@@ -1,6 +1,6 @@
 import { assertIdentical } from "@kensio/smartass";
 import { describe, it } from "vitest";
-import { StaticFactory } from "./static-factory.js";
+import { StaticFactory } from "../static/static-factory.js";
 import { VariantFactory } from "./variant-factory.js";
 
 describe("Variant Factory", () => {

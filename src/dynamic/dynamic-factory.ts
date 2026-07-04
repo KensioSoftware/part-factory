@@ -1,6 +1,6 @@
-import type { DeepPartialObject } from "./deep-partial.js";
-import { override } from "./override.js";
-import type { ItemFactory, ItemMaker } from "./factory.js";
+import type { DeepPartialObject } from "../partial/deep-partial.js";
+import { override } from "../partial/override.js";
+import type { ItemFactory, ItemMaker } from "../factory.js";
 
 /**
  * Creates complete items from a default item maker and optional overrides.

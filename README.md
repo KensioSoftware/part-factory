@@ -49,7 +49,7 @@ library such as [Faker](https://fakerjs.dev/).
 
 ```typescript
 import { DynamicFactory } from "@kensio/part-factory";
-import { faker } from '@faker-js/faker';
+import { faker } from "@faker-js/faker";
 
 const fooFactory = new DynamicFactory<Foo>(() => ({
   name: faker.word.noun(),
@@ -69,7 +69,7 @@ We can create variant factories that apply preset variations to objects made by 
 
 ```typescript
 import { DynamicFactory, VariantFactory } from "@kensio/part-factory";
-import { faker } from '@faker-js/faker';
+import { faker } from "@faker-js/faker";
 
 const animalFactory = new DynamicFactory<Foo>(() => ({
   name: faker.animal.type(),
