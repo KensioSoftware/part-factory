@@ -66,4 +66,31 @@ describe("Static Factory", () => {
     assertIdentical(item.name, "Foo Collection");
     assertArrayEquals(item.tags, ["C", "B"]);
   });
+
+  it("does not leak nested object mutations between created items", () => {
+    interface NestedFoo {
+      name: string;
+      details: {
+        price: number;
+        currency: string;
+      };
+    }
+
+    const fooFactory = new StaticFactory<NestedFoo>({
+      name: "Foobar",
+      details: {
+        price: 10,
+        currency: "GBP",
+      },
+    });
+
+    const firstItem = fooFactory.make();
+    const secondItem = fooFactory.make();
+
+    firstItem.details.price = 20;
+    firstItem.details.currency = "EUR";
+
+    assertIdentical(secondItem.details.price, 10);
+    assertIdentical(secondItem.details.currency, "GBP");
+  });
 });

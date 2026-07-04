@@ -34,6 +34,6 @@ export class StaticFactory<T extends object> implements ItemFactory<T> {
    * Create an item by applying overrides to static defaults.
    */
   make(overrides: DeepPartialObject<T> = {}): T {
-    return override(this.defaults, overrides);
+    return override(structuredClone(this.defaults), overrides);
   }
 }
