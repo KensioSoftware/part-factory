@@ -43,6 +43,6 @@ export class VariantFactory<T extends object> implements ItemFactory<T> {
    * Create an item by applying preset variant overrides for the base factory.
    */
   make(overrides: DeepPartialObject<T> = {}): T {
-    return this.factory.make(override(this.presetOverrides, overrides));
+    return this.factory.make(override<T>(this.presetOverrides, overrides));
   }
 }
