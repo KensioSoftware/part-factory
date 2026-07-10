@@ -6,6 +6,13 @@ import type { DeepPartialObject } from "./deep-partial.js";
 export function override<T extends object>(
   base: T,
   overrides: DeepPartialObject<T>,
-): T {
-  return _.defaultsDeep(overrides, base) as T;
+): T;
+
+export function override<T extends object>(
+  base: DeepPartialObject<T>,
+  overrides: DeepPartialObject<T>,
+): DeepPartialObject<T>;
+
+export function override(base: object, overrides: object): object {
+  return _.defaultsDeep(overrides, base) as object;
 }
