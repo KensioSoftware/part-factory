@@ -83,6 +83,33 @@ describe("Mapped Factory", () => {
     );
   });
 
+  it("passes dependencies to the mapper function", () => {
+    interface PathComponents {
+      resourceType: string;
+      resourceId: string;
+    }
+
+    const productUrlFactory = new MappedFactory<
+      PathComponents,
+      ProductUrl,
+      { host: string }
+    >(
+      () => ({
+        resourceType: "products",
+        resourceId: "product-1",
+      }),
+      (components, { host }) =>
+        `https://${host}/${components.resourceType}/${components.resourceId}`,
+    );
+
+    const item = productUrlFactory.make(
+      { resourceId: "product-2" },
+      { host: "api.example.com" },
+    );
+
+    assertIdentical(item, "https://api.example.com/products/product-2");
+  });
+
   it("allows mapping to a non-object output type", () => {
     interface PriceComponents {
       amount: number;

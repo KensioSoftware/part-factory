@@ -144,12 +144,12 @@ const bucketArn = arnFactory.make({
 
 ## AsyncMappedFactory
 
-Some test entities are not just data. They have to be created in something, such as a client or a
-simulator, so creating one is asynchronous and needs a handle on whatever it is being created in.
+Sometimes producing the value is asynchronous. A test entity might have to be created in a database,
+a client or a simulator, or a value might have to be signed or encoded by something that returns a
+promise.
 
-`AsyncMappedFactory` builds the input defaults, applies overrides to them, and passes the completed
-input to a function that creates the entity. Whatever the entity is created in is passed as a
-dependency when you call `create`.
+`AsyncMappedFactory` works in the same way as `MappedFactory`, except that its mapping function
+returns a promise, so `make` returns a promise too.
 
 ```typescript
 import { AsyncMappedFactory } from "@kensio/part-factory";
@@ -179,10 +179,10 @@ const userFactory = new AsyncMappedFactory<
   (newUser, { database }) => database.insertUser(newUser),
 );
 
-const defaultUser = await userFactory.create({}, { database });
+const defaultUser = await userFactory.make({}, { database });
 // { id: "user-1", name: "Foo User", email: "foo@example.com" }
 
-const myUser = await userFactory.create(
+const myUser = await userFactory.make(
   { email: "bar@example.com" },
   { database },
 );
@@ -193,17 +193,19 @@ The overrides describe what is asked for, and the return value is what comes bac
 separate types in the same way as `MappedFactory`. Here the factory is given a `NewUser` to insert
 and returns the `User` the database allocated an id for.
 
-`make` stays synchronous and returns the value directly. `create` is asynchronous, and means the
-entity now exists in the system it was created in.
+Only the mapping function is awaited. The input defaults are still built synchronously, so anything
+that has to be fetched first is fetched before `make` is called, then passed in as an override or a
+dependency.
 
 ## Dependencies
 
-Dependencies are one object, passed as the second argument after the overrides. They are given at
-call time rather than held by the factory, so a factory stays a value you can share between tests
-without it holding any state of its own.
+A factory can declare dependencies: the things its functions need that are not part of the value
+being made, such as a database, a client or a piece of configuration. They are one object, passed as
+the second argument after the overrides. They are given at call time rather than held by the
+factory, so a factory stays a value you can share between tests without it holding any state of its
+own.
 
-`DynamicFactory` takes dependencies as well, after the overrides its defaults maker already
-receives:
+`DynamicFactory` passes them to its defaults maker, after the overrides it already receives:
 
 ```typescript
 const fooFactory = new DynamicFactory<Foo, { prefix: string }>(
@@ -217,11 +219,28 @@ const myFoo = fooFactory.make({ size: 20 }, { prefix: "test" });
 // { name: "test-external", size: 20 }
 ```
 
+`MappedFactory` and `AsyncMappedFactory` pass them to their mapping function, after the completed
+input:
+
+```typescript
+const fooLabelFactory = new MappedFactory<Foo, string, { prefix: string }>(
+  () => ({ name: "Foobar", size: 10 }),
+  (foo, { prefix }) => `${prefix}-${foo.name}-${String(foo.size)}`,
+);
+
+const myLabel = fooLabelFactory.make({ size: 20 }, { prefix: "test" });
+// "test-Foobar-20"
+```
+
 `VariantFactory` forwards them to the factory it wraps, so a variant of a factory with dependencies
 is made the same way as any other variant.
 
 A factory declaring no dependencies takes no dependency argument, and a factory declaring them does
 not compile without them.
+
+Dependencies are used as they are given, never fetched or awaited by the factory. Whatever has to be
+looked up or set up first is done before the factory is called, so the factory only ever uses what
+it is handed.
 
 It is worth typing each factory's dependencies as narrowly as it actually needs. A factory that only
 inserts users should ask for the user store rather than for the whole system, or the dependencies
