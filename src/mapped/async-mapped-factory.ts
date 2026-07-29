@@ -3,18 +3,21 @@ import { override } from "../partial/override.js";
 import type { DependencyArguments } from "../factory.js";
 
 /**
- * Creates one entity in a system supplied by the caller.
+ * Creates output values asynchronously by mapping a completed input object.
  *
- * Use this factory when the entity has to be created in something, such as a
- * client or a simulator, so that creating it is asynchronous. Each call to
- * `create` builds the input defaults, applies deep partial overrides, and
- * passes the completed input to a function that creates the entity.
+ * Use this factory when producing the value is asynchronous, such as when the
+ * entity has to be created in a database, a client or a simulator, or when the
+ * value has to be fetched, signed or encoded by something that returns a
+ * promise. Each call to `make` builds the input defaults, applies deep partial
+ * overrides, and passes the completed input to the mapper function.
  *
  * The overrides describe what is asked for, and the return value is what comes
  * back, so the two are separate types in the same way as `MappedFactory`.
  *
- * Whatever the entity is created in is passed as a dependency at call time
- * rather than held by the factory, which keeps the factory free of state.
+ * The mapper function can also declare dependencies, which are passed to `make`
+ * after the overrides. Only the mapper function is awaited, so anything that
+ * has to be fetched first is fetched before `make` is called and passed in as
+ * an override or a dependency.
  * @example
  * ```typescript
  * interface NewUser {
@@ -42,10 +45,10 @@ import type { DependencyArguments } from "../factory.js";
  *   (newUser, { database }) => database.insertUser(newUser),
  * );
  *
- * const user = await userFactory.create({}, { database });
+ * const user = await userFactory.make({}, { database });
  * // { id: "...", name: "Test User", email: "test.user@example.com" }
  *
- * const namedUser = await userFactory.create({ name: "Foo" }, { database });
+ * const namedUser = await userFactory.make({ name: "Foo" }, { database });
  * // { id: "...", name: "Foo", email: "test.user@example.com" }
  * ```
  */
@@ -56,23 +59,20 @@ export class AsyncMappedFactory<
 > {
   constructor(
     private readonly makeInput: () => Input,
-    private readonly createOutput: (
+    private readonly map: (
       input: Input,
       ...dependencies: DependencyArguments<Dependencies>
     ) => Promise<Output>,
   ) {}
 
   /**
-   * Create an entity by building input defaults, applying input overrides, and
-   * passing the completed input to the creating function.
+   * Create an output by building input defaults, applying input overrides, and
+   * mapping the completed input asynchronously.
    */
-  create(
+  make(
     overrides: DeepPartialObject<Input> = {},
     ...dependencies: DependencyArguments<Dependencies>
   ): Promise<Output> {
-    return this.createOutput(
-      override(this.makeInput(), overrides),
-      ...dependencies,
-    );
+    return this.map(override(this.makeInput(), overrides), ...dependencies);
   }
 }

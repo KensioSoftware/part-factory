@@ -53,7 +53,7 @@ describe("Async Mapped Factory", () => {
   it("creates an entity in the system given as a dependency", async () => {
     const store = makeUserStore();
 
-    const user = await makeUserFactory().create({}, { store });
+    const user = await makeUserFactory().make({}, { store });
 
     assertIdentical(user.id, "user-1");
     assertIdentical(user.name, "Foo User");
@@ -63,7 +63,7 @@ describe("Async Mapped Factory", () => {
   it("applies overrides to the input before creating the entity", async () => {
     const store = makeUserStore();
 
-    const user = await makeUserFactory().create({ name: "Foobar" }, { store });
+    const user = await makeUserFactory().make({ name: "Foobar" }, { store });
 
     assertIdentical(user.name, "Foobar");
     assertIdentical(user.contact.email, "foo@example.com");
@@ -72,7 +72,7 @@ describe("Async Mapped Factory", () => {
   it("allows overriding a nested input property", async () => {
     const store = makeUserStore();
 
-    const user = await makeUserFactory().create(
+    const user = await makeUserFactory().make(
       { contact: { email: "bar@example.com" } },
       { store },
     );
@@ -85,8 +85,8 @@ describe("Async Mapped Factory", () => {
     const store = makeUserStore();
     const userFactory = makeUserFactory();
 
-    const first = await userFactory.create({}, { store });
-    const second = await userFactory.create({}, { store });
+    const first = await userFactory.make({}, { store });
+    const second = await userFactory.make({}, { store });
 
     assertIdentical(first.id, "user-1");
     assertIdentical(second.id, "user-2");
@@ -99,7 +99,7 @@ describe("Async Mapped Factory", () => {
       (input) => Promise.resolve(`${input.prefix}-1`),
     );
 
-    assertIdentical(await idFactory.create(), "foo-1");
-    assertIdentical(await idFactory.create({ prefix: "bar" }), "bar-1");
+    assertIdentical(await idFactory.make(), "foo-1");
+    assertIdentical(await idFactory.make({ prefix: "bar" }), "bar-1");
   });
 });
