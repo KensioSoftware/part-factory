@@ -1,4 +1,5 @@
 export * from "./dynamic/dynamic-factory.js";
+export * from "./mapped/async-mapped-factory.js";
 export * from "./mapped/mapped-factory.js";
 export * from "./static/static-factory.js";
 export * from "./variant/variant-factory.js";

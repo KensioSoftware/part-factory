@@ -1,6 +1,10 @@
 import type { DeepPartialObject } from "../partial/deep-partial.js";
 import { override } from "../partial/override.js";
-import type { ItemFactory, ItemMaker } from "../factory.js";
+import type {
+  DependencyArguments,
+  ItemFactory,
+  ItemMaker,
+} from "../factory.js";
 
 /**
  * Creates complete items from a function that builds default values.
@@ -9,6 +13,9 @@ import type { ItemFactory, ItemMaker } from "../factory.js";
  * such as when values need to be unique, random, or based on the requested
  * overrides. The default maker receives the same overrides passed to `make`,
  * then the overrides are applied to the generated defaults.
+ *
+ * The default maker can also declare dependencies, which are passed to `make`
+ * after the overrides.
  * @example
  * ```typescript
  * interface User {
@@ -30,13 +37,19 @@ import type { ItemFactory, ItemMaker } from "../factory.js";
  * // { id: "...", name: "Test User", active: false }
  * ```
  */
-export class DynamicFactory<T extends object> implements ItemFactory<T> {
-  constructor(private readonly makeDefaults: ItemMaker<T>) {}
+export class DynamicFactory<
+  T extends object,
+  Dependencies = undefined,
+> implements ItemFactory<T, Dependencies> {
+  constructor(private readonly makeDefaults: ItemMaker<T, Dependencies>) {}
 
   /**
    * Create an item by building defaults and applying overrides.
    */
-  make(overrides: DeepPartialObject<T> = {}): T {
-    return override(this.makeDefaults(overrides), overrides);
+  make(
+    overrides: DeepPartialObject<T> = {},
+    ...dependencies: DependencyArguments<Dependencies>
+  ): T {
+    return override(this.makeDefaults(overrides, ...dependencies), overrides);
   }
 }

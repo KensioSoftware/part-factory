@@ -59,4 +59,18 @@ describe("Dynamic Factory", () => {
     assertIdentical(item.details.price, 20);
     assertIdentical(item.details.currency, "GBP");
   });
+
+  it("gives dependencies to the defaults maker", () => {
+    const fooFactory = new DynamicFactory<Foo, { currency: string }>(
+      (_overrides, { currency }) => ({
+        name: `Foobar in ${currency}`,
+        price: 10,
+      }),
+    );
+
+    const item = fooFactory.make({}, { currency: "GBP" });
+
+    assertIdentical(item.name, "Foobar in GBP");
+    assertIdentical(item.price, 10);
+  });
 });
