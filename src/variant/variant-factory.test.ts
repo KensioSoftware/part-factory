@@ -1,5 +1,6 @@
 import { assertIdentical } from "@kensio/smartass";
 import { describe, it } from "vitest";
+import { DynamicFactory } from "../dynamic/dynamic-factory.js";
 import { StaticFactory } from "../static/static-factory.js";
 import { VariantFactory } from "./variant-factory.js";
 
@@ -87,5 +88,23 @@ describe("Variant Factory", () => {
     assertIdentical(item.metadata.tags.featured, true);
     assertIdentical(item.metadata.tags.clearance, true);
     assertIdentical(item.metadata.supplier, "Acme");
+  });
+
+  it("forwards dependencies to the base factory", () => {
+    const fooFactory = new DynamicFactory<Foo, { currency: string }>(
+      (_overrides, { currency }) => ({
+        name: `Foobar in ${currency}`,
+        price: 10,
+      }),
+    );
+    const variantFactory = new VariantFactory<Foo, { currency: string }>(
+      fooFactory,
+      { price: 20 },
+    );
+
+    const item = variantFactory.make({}, { currency: "GBP" });
+
+    assertIdentical(item.name, "Foobar in GBP");
+    assertIdentical(item.price, 20);
   });
 });
