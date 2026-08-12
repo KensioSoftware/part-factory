@@ -1,4 +1,8 @@
-import { assertIdentical } from "@kensio/smartass";
+import {
+  assertIdentical,
+  assertObjectEquals,
+  assertUndefined,
+} from "@kensio/smartass";
 import { describe, it } from "vitest";
 import { DynamicFactory } from "../dynamic/dynamic-factory.js";
 import { StaticFactory } from "../static/static-factory.js";
@@ -88,6 +92,38 @@ describe("Variant Factory", () => {
     assertIdentical(item.metadata.tags.featured, true);
     assertIdentical(item.metadata.tags.clearance, true);
     assertIdentical(item.metadata.supplier, "Acme");
+  });
+
+  it("carries an undefined override through to the base factory", () => {
+    interface OptionalFoo {
+      name: string;
+      price?: number;
+    }
+
+    const fooFactory = new StaticFactory<OptionalFoo>({
+      name: "Foobar",
+      price: 10,
+    });
+    const variantFactory = new VariantFactory<OptionalFoo>(fooFactory, {
+      name: "Foobar 2",
+    });
+
+    const item = variantFactory.make({ price: undefined });
+
+    assertIdentical(item.name, "Foobar 2");
+    assertUndefined(item.price);
+  });
+
+  it("does not modify the overrides it is given", () => {
+    const fooFactory = new StaticFactory<Foo>({ name: "Foobar", price: 10 });
+    const variantFactory = new VariantFactory<Foo>(fooFactory, {
+      name: "Foobar 2",
+    });
+    const overrides = { price: 20 };
+
+    variantFactory.make(overrides);
+
+    assertObjectEquals(overrides, { price: 20 });
   });
 
   it("forwards dependencies to the base factory", () => {

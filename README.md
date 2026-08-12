@@ -301,3 +301,66 @@ const userProfile = userProfileFactory.make({
 //   },
 // }
 ```
+
+## What an override sets
+
+An override sets a property by naming it. A key that appears in the overrides
+wins, and a key that is left out keeps the default. The value itself plays no
+part in that decision, so a property can be overridden with `undefined`:
+
+```typescript
+import { StaticFactory } from "@kensio/part-factory";
+
+interface Deployment {
+  name: string;
+  connection?: { url: string };
+}
+
+const deploymentFactory = new StaticFactory<Deployment>({
+  name: "foo-stack",
+  connection: { url: "https://example.com" },
+});
+
+const disconnected = deploymentFactory.make({ connection: undefined });
+// { name: "foo-stack", connection: undefined }
+```
+
+This matters for tests covering the case where a value is missing. Without it,
+the missing case has to be made the factory default and the ordinary case a
+variant, which puts the description of the object the wrong way round.
+
+The other side of the rule is that a value which might be `undefined` no longer
+falls back to the default. To override a property only when there is something
+to set, leave the key out:
+
+```typescript
+const deployment = deploymentFactory.make({
+  ...(connection && { connection }),
+});
+```
+
+## What an override replaces
+
+Overrides are merged into plain objects, one key at a time, down through the
+nested structure. Every other kind of value is replaced whole.
+
+Arrays are replaced rather than merged element by element, so overriding a list
+of three tags with a list of one tag gives a list of one tag:
+
+```typescript
+const collectionFactory = new StaticFactory<Collection>({
+  tags: ["A", "B", "C"],
+});
+
+const collection = collectionFactory.make({ tags: ["Z"] });
+// { tags: ["Z"] }
+```
+
+Class instances, `Date` objects and functions are values in their own right, so
+they are handed to the made item as they are. A stub or a spy can be held in a
+factory's defaults and comes back as the same object, with its methods intact.
+
+Each made item gets its own copy of the plain objects and arrays around those
+values, so mutating one item leaves the factory defaults and the other items
+alone. The overrides object passed to `make` is copied in the same way and is
+safe to reuse across calls.
