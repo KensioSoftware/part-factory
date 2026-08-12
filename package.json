@@ -47,8 +47,8 @@
     "@eslint/js": "^10.0.1",
     "@kensio/smartass": "^1.33.0",
     "@types/eslint-plugin-security": "^3.0.1",
-    "@types/lodash": "^4.17.24",
     "@types/node": "^26.0.0",
+    "@typescript/native": "npm:typescript@^7.0.2",
     "@vitest/coverage-v8": "^4.1.10",
     "@vitest/eslint-plugin": "^1.6.22",
     "eslint": "^10.6.0",
@@ -60,12 +60,8 @@
     "globals": "^17.7.0",
     "jiti": "^2.7.0",
     "prettier": "^3.9.5",
-    "@typescript/native": "npm:typescript@^7.0.2",
     "typescript": "npm:@typescript/typescript6@^6.0.2",
     "typescript-eslint": "^8.63.0",
     "vitest": "^4.1.10"
-  },
-  "dependencies": {
-    "lodash": "^4.18.1"
   }
 }

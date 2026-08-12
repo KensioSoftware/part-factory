@@ -32,8 +32,12 @@ export class StaticFactory<T extends object> implements ItemFactory<T> {
 
   /**
    * Create an item by applying overrides to static defaults.
+   *
+   * The merge copies the plain objects and arrays it finds, so each item gets
+   * its own copy of the nested structure and the defaults held here are left
+   * alone.
    */
   make(overrides: DeepPartialObject<T> = {}): T {
-    return override(structuredClone(this.defaults), overrides);
+    return override(this.defaults, overrides);
   }
 }
