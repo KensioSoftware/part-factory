@@ -142,6 +142,40 @@ const bucketArn = arnFactory.make({
 // "arn:aws:s3:eu-west-1:123456789012:bucket/abc123def4"
 ```
 
+The mapping function can also take dependencies, in the same way as `AsyncMappedFactory`. They are
+declared as a third type argument and given to `make` after the overrides, so the mapping function
+can use values that belong to the test environment rather than to the input:
+
+```typescript
+interface ArnParts {
+  partition: "aws";
+  service: string;
+  resourceType: string;
+  resourceId: string;
+}
+
+const accountArnFactory = new MappedFactory<
+  ArnParts,
+  Arn,
+  { account: { id: string; region: string } }
+>(
+  () => ({
+    partition: "aws",
+    service: "lambda",
+    resourceType: "function",
+    resourceId: "example-function",
+  }),
+  (parts, { account }) =>
+    `arn:${parts.partition}:${parts.service}:${account.region}:${account.id}:${parts.resourceType}/${parts.resourceId}`,
+);
+
+const accountArn = accountArnFactory.make(
+  { service: "s3", resourceType: "bucket", resourceId: "abc123def4" },
+  { account: { id: "210987654321", region: "us-east-1" } },
+);
+// "arn:aws:s3:us-east-1:210987654321:bucket/abc123def4"
+```
+
 ## AsyncMappedFactory
 
 Sometimes producing the value is asynchronous. A test entity might have to be created in a database,
