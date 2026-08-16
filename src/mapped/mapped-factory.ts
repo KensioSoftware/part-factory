@@ -11,7 +11,10 @@ import type { DependencyArguments } from "../factory.js";
  * and passes the completed input to the mapper function.
  *
  * The mapper function can also declare dependencies, which are passed to `make`
- * after the overrides.
+ * after the overrides, in the same way as `AsyncMappedFactory`. Use them for
+ * the things the mapper needs that are not part of the input, such as a client
+ * or a piece of configuration. They are given at call time rather than held by
+ * the factory, and are used as they are given, never fetched or awaited.
  * @example
  * ```typescript
  * interface UrlParts {
@@ -34,6 +37,22 @@ import type { DependencyArguments } from "../factory.js";
  *
  * const apiUrl = urlFactory.make({ path: "/api/users" });
  * // "https://example.com/api/users"
+ *
+ * // The same factory with the host supplied as a dependency:
+ * const hostedUrlFactory = new MappedFactory<
+ *   Omit<UrlParts, "host">,
+ *   string,
+ *   { server: { host: string } }
+ * >(
+ *   () => ({
+ *     protocol: "https",
+ *     path: "/users",
+ *   }),
+ *   (parts, { server }) => `${parts.protocol}://${server.host}${parts.path}`,
+ * );
+ *
+ * const hostedUrl = hostedUrlFactory.make({ path: "/api/users" }, { server });
+ * // "https://test.example.com/api/users"
  * ```
  */
 export class MappedFactory<
