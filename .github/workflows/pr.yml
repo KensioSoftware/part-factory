@@ -16,7 +16,7 @@ env:
 jobs:
   lint:
     name: Lint
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6
@@ -29,7 +29,7 @@ jobs:
 
   test:
     name: Test
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6
@@ -42,7 +42,7 @@ jobs:
 
   build:
     name: Build
-    runs-on: blacksmith-4vcpu-ubuntu-2404
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/action-setup@v6
