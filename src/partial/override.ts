@@ -89,7 +89,9 @@ function merge(base: unknown, overrides: unknown): unknown {
   return result;
 }
 
-/** Override a base object with partial overrides. */
+/**
+ * Override a base object with partial overrides.
+ */
 export function override<T extends object>(
   base: T,
   overrides: DeepPartialObject<T>,
